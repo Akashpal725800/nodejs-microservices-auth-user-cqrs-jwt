@@ -1,12 +1,16 @@
 require('dotenv').config();
 const express = require('express');
-const mongoose=require('mongoose')
+const mongoose = require('mongoose');
+
+const { connect } = require('./src/utils/rabbitmq'); 
 
 const app = express();
 app.use(express.json());
 
 mongoose.connect(process.env.MONGODB_URL)
-.then(()=>console.log("Database is connected successull"))
+.then(() => console.log("Database is connected successful"));
+
+connect();
 
 const authRoutes = require('./src/routes/auth.routes');
 app.use('/auth', authRoutes);
